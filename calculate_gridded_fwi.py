@@ -48,17 +48,17 @@ long_names_cffwis = {'FFMC': 'Fine Fuel Moisture Code',
 # Descriptions of CFFWIS components are taken almost verbatim from: Canadian Forest Service. (no date). Background Information: Canadian
 # Forest Fire Weather Index (FWI) System. Available at: https://cwfis.cfs.nrcan.gc.ca/background/summary/fwi
 description_cffwis = {'FFMC': 'Numeric rating of the moisture content of litter and other cured fine fuels. '\
-                              +'This code is an indicator of the relative ease of ignition and the flammability of fine fuel (CFS n.d.).',
+                              +'This code is an indicator of the relative ease of ignition and the flammability of fine fuel (NRCan n.d.).',
                       'DMC': 'Numeric rating of the average moisture content of loosely compacted organic layers of moderate depth. '\
-                             +'This code gives an indication of fuel consumption in moderate duff layers and medium-size woody material (CFS n.d.).',
+                             +'This code gives an indication of fuel consumption in moderate duff layers and medium-size woody material (NRCan n.d.).',
                       'DC': 'Numeric rating of the average moisture content of deep, compact organic layers. This code is a useful indicator of '\
-                            +'seasonal drought effects on forest fuels and the amount of smoldering in deep duff layers and large logs (CFS n.d.).',
-                      'BUI': 'Numeric rating of the total amount of fuel available for combustion. It is based on the DMC and the DC (CFS n.d.).', 
+                            +'seasonal drought effects on forest fuels and the amount of smoldering in deep duff layers and large logs (NRCan n.d.).',
+                      'BUI': 'Numeric rating of the total amount of fuel available for combustion. It is based on the DMC and the DC (NRCan n.d.).', 
                       'ISI': 'Numeric rating of the expected rate of fire spread. It is based on wind speed and FFMC. '\
-                             +'Actual spread rates vary between fuel types at the same ISI (CFS n.d.).',
+                             +'Actual spread rates vary between fuel types at the same ISI (NRCan n.d.).',
                       'FWI': 'Numeric rating of fire intensity. It is based on the ISI and the BUI, and is used as a general index of fire danger '\
-                             +'throughout the forested areas of Canada (CFS n.d.).',
-                      'DSR': 'Numeric rating of the difficulty of controlling fires. It is based on the Fire Weather Index (CFS n.d.).',
+                             +'throughout the forested areas of Canada (NRCan n.d.).',
+                      'DSR': 'Numeric rating of the difficulty of controlling fires. It is based on the Fire Weather Index (NRCan n.d.).',
                       'fire_season_mask': 'Boolean mask of overwintering period (fire weather calculations turned off) or active fire season '\
                                             +'(when fire weather calculations are turned on), based on temperature thresholds.' 
                       }
@@ -108,7 +108,7 @@ for e in EnsembleNumber:
                                 # Service observation-based FWI (NFC 2012).
                                 carry_over_fraction=0.75, # McElhinny et al (2020) use value of 1, but 0.75 is more appropriate without snow info
                                 wetting_efficiency_fraction=0.75, # consistent with McElhinny et al (2020)
-                                # Overwinter DMC following Canadian Forest Service (CFS) methods:
+                                # Overwinter DMC following NRCan Canadian Forest Service (CFS) methods:
                                 # 'dry_start' is applied only to DMC, and spring DMC will be calculated as 
                                 # DMC_spring = 6 + dc_dry_factor * number of days since last precip event > precip_thresh
                                 # where 6 is the default start-up value for DMC. This method follows that used in NFC (2012), 
@@ -179,11 +179,13 @@ for e in EnsembleNumber:
                                         +'the CFFDRS methods described in Lawson and Armitage (2008). Both the wetting efficiency fraction '\
                                         +'(effectiveness of winter precipitation in recharging spring moisture) and the carry-over fraction '\
                                         +"(of last fall's moisture) are set to 0.75 due to lack of soils information and snow "\
-                                        +'depth projections. This follows the methods of CFS (Carr pers. comm. 2021; NFC 2012).'\
+                                        +'depth projections. This follows the methods of the Canadian Forest Service (CFS) (Carr pers. comm. 2021; NFC 2012).'\
                                         +'DMC is overwintered followed the methods of CFS (Carr pers. comm. 2021), '\
                                         +'where spring DMC is set to 6 plus 1.2 times the number of days since a '\
                                         +'DMC-altering precipitation event (>1.5 mm of precipitation).',
-                        references = 'Van Vliet, L. D. et al. [in review]. Developing user-informed fire weather projections for Canada. Climate Services.', # LV: to be updated with final accepted publication
+                        references = 'Van Vliet, L. D. et al. [in review]. Developing user-informed fire weather projections for Canada. Climate Services.'\
+                                     +'Natural Resources Canada (NRCan). [no date]. Background Information: Canadian Forest Fire Weather Index (FWI) System. '\
+                                     +'Accessed on: 2023-04-27. Available at: https://cwfis.cfs.nrcan.gc.ca/background/summary/fwi.' , # LV: to be updated with final accepted publication
                         index_package_information = f'CFFWIS outputs calculated using xclim  {xc.__version__} indices.fwi.fire_weather_ufunc and indices.fwi.fire_season. '\
                                                     +'Reference: Logan, Travis, et al. Ouranosinc/xclim: V0.39.0. v0.39.0, Zenodo, 2 Nov. 2022, p., doi:10.5281/zenodo.7274811.', 
                         land_fraction = 'Analysis only performed on "land" grid cells, determined using nearest-neighbour analysis from original NAM-44 grid.' 

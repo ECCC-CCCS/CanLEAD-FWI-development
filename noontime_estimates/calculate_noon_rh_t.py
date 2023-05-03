@@ -210,7 +210,7 @@ for m in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]:
                            sunrise_noon.solar_noon_utc, #  h_noon
                            temp_offsets.hmax_offset, # hmax_offset, hmin_offset=0 as per equation default
                            dask='parallelized').rename("tnoon").to_dataset()
-    tnoon = xr.where(tnoon.lat >= 66, tasmaxAdjust, tnoon) # above Arctic circle, set tnoon to tasmax. As "sunrise" does not exist during some times of year above 66 deg N, we cannot use noontime adjustment eqns 
+    tnoon = xr.where(tnoon.lat >= 65, tasmaxAdjust, tnoon) # above Arctic circle, set tnoon to tasmax. As "sunrise" does not exist during some times of year above 66 deg N, we cannot use noontime adjustment eqns 
     tnoon.tnoon.attrs['units'] = '°C'
     tnoon.tnoon.attrs['standard_name'] = 'air_temperature'
     tnoon.tnoon.attrs['long_name'] = 'Approximate air temperature at solar noon' 
