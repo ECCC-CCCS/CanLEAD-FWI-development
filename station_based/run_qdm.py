@@ -229,7 +229,7 @@ def apply_qm(s, provider_name, data_obs=None, data_model=None, quantiles=None, h
                                       +'is completed with different ensemble member than adjustment. QDM history: '\
                                       +f'{qdm_hist}. Quantiles: {quantiles}.', # xclim version is recorded already in 'qdm_hist'
                             git_id = tracking_id,
-                            git_repo = 'https://github.com/ECCC-CCCS/CanLEAD-FWI-v1/commit/',
+                            git_repo = 'https://github.com/ECCC-CCCS/CanLEAD-FWI-v1/',
                             )
         adjusted.attrs = attrs_to_add # add new attrs
                 
