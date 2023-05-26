@@ -13,7 +13,7 @@ import xarray as xr
 from tqdm import tqdm
 from xclim import sdba
 from xclim.sdba import construct_moving_yearly_window, unpack_moving_yearly_window
-from xclim.sdba.processing import to_additive_space, from_additive_space
+from xclim.sdba.processing import to_additive_space, from_additive_space, jitter
 sys.path.append(os.path.expanduser('~/fwi_updates/CanLEAD-FWI-v1/')) 
 from filepaths import fwipaths
 import subprocess
@@ -88,6 +88,12 @@ def QM_routine(obs, hist, sim, qnts=None, realization=None, training_realization
     obs.attrs['units'] = ''
     
     if fwi_component == 'FFMC': # for FFMC, must convert to additive space using logit transform, as it has an upper bound (bounds = (0, 101))
+        # first, jitter under and over threshold (i.e., replace values by a uniform random noise). Otherwise, values which equal zero or 101 will be converted to -inf and +inf
+        # lower and upper bounds specify values under and over which jittering is performed, respectively. min and max match data possible min and max
+        sim = jitter(sim, lower='0.25', upper='100.75', minimum='0', maximum='101') 
+        hist = jitter(hist, lower='0.25', upper='100.75', minimum='0', maximum='101')
+        obs = jitter(obs, lower='0.25', upper='100.75', minimum='0', maximum='101')
+        # then, convert to additive stpace
         sim = to_additive_space(sim, lower_bound='0', upper_bound='101', trans='logit')
         hist = to_additive_space(hist, lower_bound='0', upper_bound='101', trans='logit')
         obs = to_additive_space(obs, lower_bound='0', upper_bound='101', trans='logit')
