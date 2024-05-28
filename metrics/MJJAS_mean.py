@@ -22,6 +22,9 @@ ens_group = sys.argv[2] # ensemble set, 1 to 5
 # get filenames of daily data for 10 ensemble members in the specified set
 fls = glob.glob(f'{fwipaths.output_data}/{version}/r{ens_group}_*.nc')
 
+# Canada mask, excluding northern Arctic
+final_mask = xr.open_dataset(f'{fwipaths.input_data}/CanLEAD_FWI_final_mask.nc')['CanLEAD_FWI_mask'] 
+
 # loop over realizations by filename
 for fl in fls: 
     
@@ -50,8 +53,10 @@ for fl in fls:
     for var in ['lat','lon']: 
         encoding[var] = {'dtype': 'float64', '_FillValue': None}  # for lat and lon
     
+    outMJJAS = outMJJAS.where(final_mask==100) # mask with Canadian boundaries and ecozone mask
+    
     # save
-    outMJJAS.to_netcdf(f'{outpath}/MJJAS_mean_fillna/{realization_label}_{version}_MJJAS_mean_fillna.nc', encoding=encoding) 
+    outMJJAS.to_netcdf(f'{outpath}/MJJAS_mean_fillna/{realization_label}_rcp85_{version}_MJJAS_mean_fillna.nc', encoding=encoding) 
        
     del([outMJJAS,data,realization_label])
     gc.collect()

@@ -21,6 +21,9 @@ if not os.path.exists(outpath): # create outpath if it doesn't already exist
 # get filenames of daily data of all 50 realizations 
 fls = glob.glob(f'{fwipaths.output_data}/{version}/*.nc') 
 
+# Canada mask, excluding northern Arctic
+final_mask = xr.open_dataset(f'{fwipaths.input_data}/CanLEAD_FWI_final_mask.nc')['CanLEAD_FWI_mask'] 
+
 for fl in fls: # loop over realizations by filename
                           
     data = xr.open_dataset(fl, chunks=stats_chunks) # open data
@@ -50,8 +53,10 @@ for fl in fls: # loop over realizations by filename
     for var in ['lat','lon']: 
         encoding[var] = {'dtype': 'float64', '_FillValue': None}  # for lat and lon
         
+    out = out.where(final_mask==100) # mask with Canadian boundaries and ecozone mask
+        
     # save
-    out.to_netcdf(f'{outpath}/{realization_label}_{version}_fire_season_length.nc', encoding=encoding) 
+    out.to_netcdf(f'{outpath}/{realization_label}_rcp85_{version}_fire_season_length.nc', encoding=encoding) 
 
     del([out,data,realization_label])
     gc.collect()
