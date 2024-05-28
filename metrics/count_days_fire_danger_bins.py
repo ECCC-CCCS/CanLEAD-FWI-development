@@ -99,7 +99,7 @@ for fl in fls:
     out = out.where(final_mask==100) # mask with Canadian boundaries and ecozone mask
            
     # save
-    out.to_netcdf(f'{outpath}/{realization_label}_rcp85_{version}_RCP85_exceedances_{level}.nc', encoding=encoding) 
+    out.to_netcdf(f'{outpath}/{realization_label}_rcp85_{version}_exceedances_{level}.nc', encoding=encoding) 
         
     to_exceed.isel(lat=1,lon=1).squeeze().to_netcdf(f'{outpath}/exceedances_thresholds_{level}.nc') # save exceedance thresholds file, for records
         

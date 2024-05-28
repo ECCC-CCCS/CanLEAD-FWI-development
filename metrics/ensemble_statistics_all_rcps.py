@@ -20,9 +20,10 @@ rcp = sys.argv[2] # get RCP from job file
 
 test_statistics = ['fire_season_length',
                    'MJJAS_quantile_fillna',
+                   'annual_quantile',
                    'exceedances_high',
                    'exceedances_extreme',
-                   'exceedances_moderate',
+                   'exceedances_very_high',
                    'MJJAS_mean_fillna',
                    'annual_exceedances_1971_2000_MJJAS_95th_quantile_fillna'
                    ]
@@ -34,7 +35,7 @@ final_mask = xr.open_dataset(f'{fwipaths.input_data}/CanLEAD_FWI_final_mask.nc')
 
 # create function to add file attrs
 def add_attrs(ds):
-    ds.attrs['creation_data'] = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
+    ds.attrs['creation_date'] = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
     ds.attrs['institution'] = 'Canadian Centre for Climate Services, Environment and Climate Change Canada'
     ds.attrs['institute_id'] = 'CCCS/ECCC'
     ds.attrs['domain'] = 'Canada land areas, excluding the Northern Arctic'
@@ -119,7 +120,7 @@ def add_var_attrs(ds, data_type, test_stat):
             ds[var].attrs['units'] = 'percent'
         elif data_type in ["absolute", 'delta']:
             # set units to days for selected vars. For MJJAS_mean and MJJAS_quantile, units are already set to "" (dimensionless)
-            if test_stat in ['exceedances_extreme', 'exceedances_high', 'exceedances_moderate', 'fire_season_length', 'annual_exceedances_1971_2000_MJJAS_95th_quantile_fillna']:
+            if test_stat in ['exceedances_extreme', 'exceedances_high', 'exceedances_very_high', 'fire_season_length', 'annual_exceedances_1971_2000_MJJAS_95th_quantile_fillna']:
                 ds[var].attrs['units'] = 'days'
     return ds
      
