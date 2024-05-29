@@ -93,7 +93,6 @@ def add_var_attrs(ds, data_type, test_stat):
         ds[var].attrs = alldat[var].attrs
         # then, update as needed
         if test_stat == 'MJJAS_mean_fillna': # update long and short name and cell methods
-            del ds[var].attrs['ancillary_variables'] # delete this ancillary variable attrs, it's only relevant for daily data
             ds[var].attrs['long_name'] = f'{ds[var].attrs["long_name"]}: May to September mean value (NaNs filled with zeroes)' 
             ds[var].attrs['short_name'] = f'{ds[var].attrs["short_name"]}_MJJAS_fillna_mean'
             ds[var].attrs['cell_methods'] = 'time: mean over MJJAS (interval: 1 day) time: mean over years' 
