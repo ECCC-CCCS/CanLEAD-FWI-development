@@ -48,8 +48,8 @@ for fl in fls:
         attrs = dict(short_name = data[var].attrs['short_name'] + '_days_greater_historical_MJJAS_q95',
                     long_name = data[var].attrs['long_name'] + ': Count of days that exceed the 95th percentile MJJAS fillna value in 1971-2000',
                     cell_methods = 'time: count within years', # in format: time: method1 within years time: method2 over years
-                    description =  data[var].attrs['description'],
-                    units = 'days')
+                    description =  data[var].attrs['description']
+                    ) # units are 'days', leave off until ensemble stats
         out[var].attrs = attrs # replace attrs with new attrs
     out.attrs['frequency'] = 'year' # change attrs in outfile to reflect new frequency
     

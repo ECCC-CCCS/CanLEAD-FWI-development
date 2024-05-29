@@ -99,7 +99,7 @@ def add_var_attrs(ds, data_type, test_stat):
         elif test_stat == 'MJJAS_quantile_fillna': # update long and short name and cell methods
             ds[var].attrs['long_name'] = f'{ds[var].attrs["long_name"]}: May to September (annual) quantile value (NaNs filled with zeroes)'
             ds[var].attrs['short_name'] = f'{ds[var].attrs["short_name"]}_MJJAS_fillna_quantile'
-        elif test_stat == 'annual_exceedances_1971_2000_MJJAS_95th_quantile_fillna':
+        elif test_stat == 'exceedances_1971_2000_MJJASp95_fillna':
             ds[var].attrs['long_name'] = ds[var].attrs['long_name'].split(':')[0] + ': Count of days that exceed the 95th percentile May to September value (NaNs filled with zeroes) in 1971-2000'
             ds[var].attrs['short_name'] = ds[var].attrs['short_name'] + '_fillna'
         
@@ -119,7 +119,7 @@ def add_var_attrs(ds, data_type, test_stat):
             ds[var].attrs['units'] = 'percent'
         elif data_type in ["absolute", 'delta']:
             # set units to days for selected vars. For MJJAS_mean and MJJAS_quantile, units are already set to "" (dimensionless)
-            if test_stat in ['exceedances_extreme', 'exceedances_high', 'exceedances_very_high', 'fire_season_length', 'annual_exceedances_1971_2000_MJJAS_95th_quantile_fillna']:
+            if test_stat in ['exceedances_extreme', 'exceedances_high', 'exceedances_very_high', 'fire_season_length', 'exceedances_1971_2000_MJJASp95_fillna']:
                 ds[var].attrs['units'] = 'days'
     return ds
      
