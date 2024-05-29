@@ -18,14 +18,14 @@ tracking_id = subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode('asci
 version = f'CanLEAD-FWI-{sys.argv[1]}-v1' # get CanLEAD version from job file
 rcp = sys.argv[2] # get RCP from job file
 
-test_statistics = ['fire_season_length',
-                   'MJJAS_quantile_fillna',
-                   'annual_quantile',
-                   'exceedances_high',
-                   'exceedances_extreme',
-                   'exceedances_very_high',
-                   'MJJAS_mean_fillna',
-                   'annual_exceedances_1971_2000_MJJAS_95th_quantile_fillna'
+test_statistics = [#'fire_season_length',
+                   #'exceedances_high',
+                   #'exceedances_extreme',
+                   #'exceedances_very_high',
+                   #'MJJAS_mean_fillna',
+                   #'MJJAS_quantile_fillna',
+                   #'annual_quantile',
+                   'exceedances_1971_2000_MJJASp95_fillna'
                    ]
 
 outpath = f'{fwipaths.output_data}{version}/summary_stats/{rcp}/ensemble_percentiles/'

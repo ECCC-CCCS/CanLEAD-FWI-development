@@ -21,7 +21,7 @@ test_statistics = ['fire_season_length',
                    'exceedances_very_high',
                    'exceedances_extreme',
                    'MJJAS_mean_fillna',
-                   'annual_exceedances_1971_2000_MJJAS_95th_quantile_fillna'
+                   'exceedances_1971_2000_MJJASp95_fillna'
                    ]
  
 version = f'CanLEAD-FWI-{sys.argv[1]}-v1' # S14FD or EWEMBI
@@ -77,6 +77,7 @@ for test_stat in test_statistics:
     
     outpath = f'{fwipaths.output_data}{version}/summary_stats/RCP85/{test_stat}/' # set input and output file directory
     fls = glob.glob(f'{outpath}/*_{version}_{test_stat}.nc') # get list of all annual frequency metrics files
+    assert len(fls) == 50, f'There are only {len(fls)}, not 50'
     
     for fl in fls: 
      
