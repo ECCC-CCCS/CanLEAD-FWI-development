@@ -20,7 +20,8 @@ test_statistics = ['MJJAS_mean_fillna',
                    'exceedances_high',
                    'exceedances_very_high',
                    'exceedances_extreme',
-                   'exceedances_1971_2000_MJJASp95_fillna']
+                   #'exceedances_1971_2000_MJJASp95_fillna'
+                   ]
 
 inpath = f'{fwipaths.output_data}{version}/summary_stats/'
 final_mask = xr.open_dataset(f'{fwipaths.input_data}/CanLEAD_FWI_final_mask.nc')['CanLEAD_FWI_mask'] 
@@ -31,10 +32,10 @@ def add_attrs(ds):
     ds.attrs['creation_date'] = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
     ds.attrs['git_id'] = tracking_id
     ds.attrs['git_repo'] = 'https://github.com/ECCC-CCCS/CanLEAD-FWI-v1/'
-    robustness.attrs['description'] = 'Boolean mask of whether the CanLEAD-FWI ensemble mean projected change is robust'\
-                                      +' (signal to noise ratio greater than 1) for the FWI System component and' \
-                                      +'  time period specified by the coordinates.' 
-    robustness.attrs['values'] = "True (robust), False (non-robust)"
+    ds.attrs['description'] = 'Boolean mask of whether the CanLEAD-FWI ensemble mean projected change is robust'\
+                                +' (signal to noise ratio greater than 1) for the FWI System component and' \
+                                +'  time period specified by the coordinates.' 
+    ds.attrs['values'] = "True (robust), False (non-robust)"
     return ds 
 
 # calculate the robustness of future change using a signal to noise ratio approach. Robust changes when |SNR| > 1
@@ -59,6 +60,3 @@ for test_stat in tqdm(test_statistics):
         # add attrs, mask to study domain, and save
         add_attrs(robustness).where(final_mask==100).to_netcdf(f'{outpath}{test_stat}_{rcp}_30yr_mean_robustness.nc')
           
-          
-          
-  
