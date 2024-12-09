@@ -1,4 +1,4 @@
-# CanLEAD-FWI-v1
+# CanLEAD-FWI
 Fire weather projections for Canada
 
 Scripts to create CanLEAD-FWI-v1. To be run in order presented below.
