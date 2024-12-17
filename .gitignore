@@ -1,0 +1,11 @@
+runfiles/*
+outfiles/*
+outfiles_2023-04-24/*
+filepaths.py
+__pycache__/*
+station_based/__pycache__/*
+station_based/__pycache__/*
+noontime_estimates/calculate_noon_rh_t_testing_RH_exceedances.py
+metrics/config_stats.py
+metrics/__pycache__/
+adj*
